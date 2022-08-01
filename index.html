@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vietnamese King</title>
+</head>
+
+<body>
+    <div>
+        <span>
+            <button onclick="start()">Chơi</button>
+            <p id="question"></p>
+            <span style="display: flex;">
+                <h4>Score: </h4>
+                <h4 id="score"> 0</h4>
+            </span>
+            <div>Time left <span id="timer"></span></div>
+        </span>
+    </div>
+    <form onsubmit="checkAnswer(event)">
+        <input id="answer" placeholder="Nhập đáp án" type="text" />
+        <button type="submit">Gửi</button>
+    </form>
+    <div id="endDiv" style="display: none;">
+        <p id="endAnswer"></p>
+        <form onsubmit="submitHighscore(event)">
+            <input id="endName" placeholder="Nhập tên" type="text" />
+            <button type="submit">Lưu</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
