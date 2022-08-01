@@ -61,7 +61,7 @@ function randomNewWord() {
     question.innerText = shuffle(q.split(''));
     resetTimer();
     timerInterval = setInterval(counter, 1000);
-    // console.log(db[randomNumber]); 
+    console.log(db[randomNumber]); 
     // Uncomment above line to console log answer
 }
 
