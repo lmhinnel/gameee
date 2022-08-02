@@ -14,14 +14,15 @@
             <button onclick="start()">Chơi</button>
             <p id="question"></p>
             <span style="display: flex;">
-                <h4>Score: </h4>
-                <h4 id="score"> 0</h4>
+                <h4>Score:</h4>
+                <h4 id="score">0</h4>
             </span>
-            <div>Time left <span id="timer"></span></div>
+            <div>Time left <span id="timer">0</span>s</div>
         </span>
     </div>
     <form onsubmit="checkAnswer(event)">
-        <input id="answer" placeholder="Nhập đáp án" type="text" />
+        <input id="answer" placeholder="Nhập đáp án" type="text" disabled />
+        <p id="wrongAnswer"></p>
         <button type="submit">Gửi</button>
     </form>
     <div id="endDiv" style="display: none;">

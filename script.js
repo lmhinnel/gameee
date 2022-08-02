@@ -8,6 +8,7 @@ var db = [],
 
 var question = document.getElementById('question'),
     answer = document.getElementById('answer'),
+    wrongAnswer = document.getElementById('wrongAnswer'),
     score = document.getElementById('score'),
     timer = document.getElementById('timer');
 
@@ -61,17 +62,22 @@ function randomNewWord() {
     question.innerText = shuffle(q.split(''));
     resetTimer();
     timerInterval = setInterval(counter, 1000);
-    console.log(db[randomNumber]); 
+    // console.log(db[randomNumber]);
     // Uncomment above line to console log answer
 }
 
 // check
 function checkAnswer(e) {
     e.preventDefault();
+    if (endGame === true) return;
     if (db[randomNumber] === answer.value) {
         answer.value = '';
         score.innerHTML++;
+        wrongAnswer.style.display = "none";
         randomNewWord();
+    } else {
+        wrongAnswer.innerHTML = `${answer.value} khum phải là đáp án đúng`;
+        wrongAnswer.style.display = "block"
     }
 }
 
@@ -79,10 +85,6 @@ function checkAnswer(e) {
 function submitHighscore(e) {
     e.preventDefault();
     window.confirm(`${endName.value}'s score is ${score.innerHTML}`)
-    // var blob = new Blob([`${endName.value} - ${score}`],
-    //     { type: "text/plain;charset=utf-8" });
-    // console.log(blob);
-    // saveAs(blob, HIGHSCORE_PATH);
 }
 
 function start() {
