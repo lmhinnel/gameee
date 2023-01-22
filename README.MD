@@ -1,0 +1,1 @@
+card image update to #0108 - Lickitung at https://www.pokemon.com/us/pokedex

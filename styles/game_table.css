@@ -1,0 +1,59 @@
+.game_table {
+  --cell-background-color: rgb(253, 215, 251);
+  --cell-border-color: rgb(184, 71, 136);
+  --cell-size: 60px;
+  --cell-box-shadow-color: rgb(184, 71, 136);
+}
+
+.game_table_row {
+  display: flex;
+  flex-direction: row;
+}
+
+.game_table_cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  background-color: var(--cell-background-color);
+  border: 1px solid var(--cell-border-color);
+  box-shadow: 1px 1px 0px var(--cell-box-shadow-color),
+    2px 2px 0px var(--cell-box-shadow-color),
+    3px 3px 0px var(--cell-box-shadow-color),
+    4px 4px 0px var(--cell-box-shadow-color);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.game_table_cell.selected {
+  background-color: var(--cell-border-color);
+  box-shadow: 1px 1px 0px var(--cell-box-shadow-color),
+    2px 2px 0px var(--cell-box-shadow-color),
+    3px 3px 0px var(--cell-box-shadow-color),
+    4px 4px 0px var(--cell-box-shadow-color);
+}
+
+.game_table_cell img {
+  width: calc(var(--cell-size) - 10px);
+  height: calc(var(--cell-size) - 10px);
+}
+
+/* CSS */
+.button-1 {
+  background-color: #ea4c89;
+  border-radius: 8px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #ffffff;
+  display: inline-block;
+  padding: 10px 16px;
+  text-align: center;
+  text-decoration: none;
+  transition: color 100ms;
+}
+
+.button-1:hover,
+.button-1:focus {
+  background-color: #f082ac;
+}
