@@ -1,6 +1,7 @@
 .game_table {
   --cell-background-color: rgb(253, 215, 251);
   --cell-border-color: rgb(184, 71, 136);
+  --cell-road-color: rgb(131, 27, 88);
   --cell-size: 60px;
   --cell-box-shadow-color: rgb(184, 71, 136);
 }
@@ -11,11 +12,14 @@
 }
 
 .game_table_cell {
+  position: relative;
+  box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
   width: var(--cell-size);
   height: var(--cell-size);
+  cursor: pointer;
   background-color: var(--cell-background-color);
   border: 1px solid var(--cell-border-color);
   box-shadow: 1px 1px 0px var(--cell-box-shadow-color),
@@ -23,7 +27,35 @@
     3px 3px 0px var(--cell-box-shadow-color),
     4px 4px 0px var(--cell-box-shadow-color);
   border-radius: 4px;
-  cursor: pointer;
+}
+
+.game_table_cell_road {
+  position: absolute;
+  background-color: var(--cell-road-color);
+}
+
+.game_table_cell_road.road_top {
+  width: 7%;
+  height: 55%;
+  margin-bottom: 50%;
+}
+
+.game_table_cell_road.road_bottom {
+  width: 7%;
+  height: 55%;
+  margin-top: 50%;
+}
+
+.game_table_cell_road.road_left {
+  width: 55%;
+  height: 7%;
+  margin-right: 50%;
+}
+
+.game_table_cell_road.road_right {
+  width: 55%;
+  height: 7%;
+  margin-left: 50%;
 }
 
 .game_table_cell.selected {
@@ -39,8 +71,19 @@
   height: calc(var(--cell-size) - 10px);
 }
 
+.game_table_hidden_cell {
+  cursor: default;
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.game_table_hidden_cell img {
+  opacity: 0;
+}
+
 /* CSS */
-.button-1 {
+.button_1 {
   background-color: #ea4c89;
   border-radius: 8px;
   border-style: none;
@@ -53,7 +96,7 @@
   transition: color 100ms;
 }
 
-.button-1:hover,
-.button-1:focus {
+.button_1:hover,
+.button_1:focus {
   background-color: #f082ac;
 }
