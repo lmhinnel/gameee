@@ -3,6 +3,8 @@ const GAME_TABLE_WIDTH = 16;
 const GAME_CARDS_PER_ASSET = 8;
 const GAME_TIME_DISPLAY_LINE = 500;
 const GAME_COUNTDOWN_TIME = 15 * 60; // seconds
+const GAME_SCORE_PER_CARD = 60;
+const GAME_SCORE_PER_SHUFFLE = 100;
 
 var game_table = document.getElementById("game_table");
 var shuffel_button = document.getElementById("shuffel_button");
@@ -303,13 +305,12 @@ const checkValidateMove = (table, p1, p2) => {
     }
     POINT_1.classList.remove("selected");
     POINT_2.classList.remove("selected");
-    p1 = null;
-    p2 = null;
     if (roadConners?.length > 0)
       score.textContent =
         parseInt(score.textContent) +
-        Math.round(60 / (roadConners?.length - 1));
+        Math.round(GAME_SCORE_PER_CARD / (roadConners?.length - 1));
   }, GAME_TIME_DISPLAY_LINE);
+  return !roadConners || roadConners?.length < 2 ? false : true;
 };
 
 const checkValidateGameTable = () => {};
@@ -402,6 +403,7 @@ document.onreadystatechange = function () {
   if (document.readyState === "complete") {
     var GAME_TABLE = initialGameTable();
     var countdown_time = GAME_COUNTDOWN_TIME;
+    var GAME_END = false;
     for (let i = 0; i < GAME_TABLE_HEIGHT + 2; i++) {
       const row = document.createElement("div");
       row.className = "game_table_row";
@@ -426,8 +428,9 @@ document.onreadystatechange = function () {
           img.src = getAssetCardURL(GAME_TABLE[i][j]);
           img.id = `game_table_cell_${i}_${j}_img`;
           img.alt = "card_" + GAME_TABLE[i][j];
+
           cell.addEventListener("click", () => {
-            if (GAME_TABLE[i][j] == 0) return;
+            if (GAME_END || GAME_TABLE[i][j] == 0) return;
             // GET SELECTED CELL
             if (cell.classList.contains("selected")) {
               cell.classList.remove("selected");
@@ -443,7 +446,13 @@ document.onreadystatechange = function () {
 
             // CHECK VALIDATE
             if (p1 && p2) {
-              checkValidateMove(GAME_TABLE, p1, p2);
+              const parse_score = parseInt(score.textContent);
+              if (!checkValidateMove(GAME_TABLE, p1, p2))
+                score.textContent = Math.abs(
+                  parse_score - GAME_SCORE_PER_CARD <= 0
+                    ? 0
+                    : parse_score - GAME_SCORE_PER_CARD
+                );
               p1 = null;
               p2 = null;
             }
@@ -457,19 +466,31 @@ document.onreadystatechange = function () {
     }
 
     // set countdonw time
-    const time_interval = setInterval(() => {
+    var time_interval = setInterval(() => {
       if (countdown_time > 0) {
         countdown_time--;
         time_content.style.width = `${
           Math.round((countdown_time / GAME_COUNTDOWN_TIME) * 10000) / 100
         }%`;
       } else {
-        alert("GAME OVER");
+        if (
+          confirm(
+            `Your score is: ${score.textContent}. Do you want to play again?`
+          )
+        ) {
+          window.location.reload();
+        } else GAME_END = true;
         clearInterval(time_interval);
       }
     }, 500);
 
     shuffel_button.addEventListener("click", () => {
+      const parse_score = parseInt(score.textContent);
+      score.textContent = Math.abs(
+        parse_score - GAME_SCORE_PER_SHUFFLE <= 0
+          ? 0
+          : parse_score - GAME_SCORE_PER_SHUFFLE
+      );
       GAME_TABLE = shuffleHehe(
         GAME_TABLE,
         getArrayFromTable(GAME_TABLE),
