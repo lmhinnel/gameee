@@ -4,6 +4,7 @@ const GAME_CARDS_PER_ASSET = 8;
 const GAME_TIME_DISPLAY_LINE = 500;
 const GAME_COUNTDOWN_TIME = 15 * 60; // seconds
 const GAME_SCORE_PER_CARD = 60;
+const GAME_SCORE_PER_WRONG = GAME_SCORE_PER_CARD / 2;
 const GAME_SCORE_PER_SHUFFLE = 100;
 
 var game_table = document.getElementById("game_table");
@@ -315,6 +316,14 @@ const checkValidateMove = (table, p1, p2) => {
 
 const checkValidateGameTable = () => {};
 
+const checkWinGame = (table, p1, p2) => {
+  for (let i = 1; i <= GAME_TABLE_HEIGHT; i++)
+    for (let j = 1; j <= GAME_TABLE_WIDTH; j++)
+      if ((i == p1.x && j == p1.y) || (i == p2.x && j == p2.y)) continue;
+      else if (table[i][j] != 0) return false;
+  return true;
+};
+
 // RENDER GAME
 const getAssetCardURL = (card_id) => {
   var str = "" + card_id;
@@ -449,13 +458,25 @@ document.onreadystatechange = function () {
               const parse_score = parseInt(score.textContent);
               if (!checkValidateMove(GAME_TABLE, p1, p2))
                 score.textContent = Math.abs(
-                  parse_score - GAME_SCORE_PER_CARD <= 0
+                  parse_score - GAME_SCORE_PER_WRONG <= 0
                     ? 0
-                    : parse_score - GAME_SCORE_PER_CARD
+                    : parse_score - GAME_SCORE_PER_WRONG
                 );
+              if (checkWinGame(GAME_TABLE, p1, p2)) {
+                if (
+                  confirm(
+                    `You win! Your score is: ${score.textContent}. Do you want to play again?`
+                  )
+                ) {
+                  window.location.reload();
+                } else GAME_END = true;
+                clearInterval(time_interval);
+              }
               p1 = null;
               p2 = null;
             }
+
+            // CHECK WIN
           });
           cell.appendChild(img);
         }
@@ -466,7 +487,7 @@ document.onreadystatechange = function () {
     }
 
     // set countdonw time
-    var time_interval = setInterval(() => {
+    const time_interval = setInterval(() => {
       if (countdown_time > 0) {
         countdown_time--;
         time_content.style.width = `${
