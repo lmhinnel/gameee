@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./../style.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/x-icon" href="./../assets/caro.ico" />
+  <title>Caro</title>
+</head>
+
+<body>
+  <header>
+    <h1>
+      <span class="btn_back" onclick="history.back()"> &lt;&lt; </span>
+      Caro
+    </h1>
+  </header>
+  <div id="menu">
+    <form onsubmit="createGame(event)">
+      <input id="size" type="number" placeholder="board size (10 to 40)" min="10" onk />
+      <button type="submit">start</button>
+    </form>
+  </div>
+  <div id="game" style="display: none;"></div>
+
+  <script src="bot.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
