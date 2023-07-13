@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./../style.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/x-icon" href="./../assets/horoscope.ico" />
+  <title>Horoscope</title>
+</head>
+
+<body>
+  <header>
+    <h1>
+      <span class="btn_back" onclick="history.back()"> &lt;&lt; </span>
+      Horoscope
+    </h1>
+  </header>
+  <div>
+    <form id="user_data" onsubmit="getFact(event)" onreset="getOnlineFact(event)">
+      <label for="birthday">Điền ngày xing:</label>
+      <input type="date" id="birthday" name="birthday" onchange="getHoroscope(event.target.value)">
+      Hoặc chọn
+      <label for="horoscope">Cung hoàng đạo:</label>
+      <select name="horoscope" id="horoscope"></select>
+      <button type="submit">Hehe1</button>
+    </form>
+  </div>
+  <div>
+    <div id="fact_title"></div>
+    <div id="fact_content"></div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="data.js"></script>
+</body>
+
+</html>
