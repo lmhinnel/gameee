@@ -49,7 +49,7 @@ function getUserData(fromEvent) {
   const zDetail = user.horoscope;
   var factDisplay = "";
   if (user.birthday != null) {
-    factTitle =
+    factDisplay =
       "Bạn xing vào thứ " +
       (user.birthday.getDay() + 1) +
       ", ngày " +
