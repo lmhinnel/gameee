@@ -1,6 +1,7 @@
-// const userData = document.getElementById("user_data");
 const factTitle = document.getElementById("fact_title");
+const factContainer = document.getElementById("fact_container");
 const factContent = document.getElementById("fact_content");
+const factImg = document.getElementById("fact_img");
 const userHoroscope = document.getElementById("horoscope");
 
 var user = {
@@ -40,6 +41,10 @@ function getHoroscope(birthday) {
   });
 }
 
+function removeBd() {
+  document.getElementById("birthday").value = "";
+}
+
 function getUserData(fromEvent) {
   const userData = new FormData(fromEvent.target);
   const bd = userData.get("birthday");
@@ -50,15 +55,12 @@ function getUserData(fromEvent) {
   var factDisplay = "";
   if (user.birthday != null) {
     factDisplay =
-      "Bạn xing vào thứ " +
-      (user.birthday.getDay() + 1) +
-      ", ngày " +
-      user.birthday.getDate() +
-      ", tháng " +
-      (user.birthday.getMonth() + 1) +
-      ", năm " +
-      user.birthday.getFullYear() +
-      ". ";
+      "Xing vào " +
+      user.birthday.toLocaleString("vi-VN", {
+        dateStyle: "full",
+        timeZone: "Asia/Ho_Chi_Minh",
+      }) +
+      ".<br />";
   }
   factDisplay += `Cung hoàng đạo nà: ${zDetail.emoji} ${zDetail.vn_name} (${zDetail.name}).\n`;
   factTitle.innerHTML = factDisplay;
@@ -66,13 +68,14 @@ function getUserData(fromEvent) {
 
 function getUserFact(z) {
   const filePath = `./fact/${z.code}.json`;
-  // read file content
   fetch(filePath)
     .then((Response) => Response.json())
     .then((data) => {
       const rd = Math.floor(Math.random() * Object.keys(data).length) + 1;
       const randomFact = data[rd];
-      factContent.innerHTML = randomFact;
+      factContent.innerHTML = `"${randomFact}"`;
+      factContainer.style.backgroundImage = `url(./assets/z-${z.code}.png)`;
+      factImg.style.backgroundImage = `url(./assets/${z.code}.png)`;
     })
     .catch((err) => {
       console.log(err);

@@ -1,8 +1,57 @@
+/* fact data display */
 #fact_title {
-  margin-top: 1rem;
   font-weight: 700;
+  padding: 1rem;
+  text-align: center;
 }
 
 #fact_content {
-  margin-top: 1rem;
+  font-style: italic;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+#fact_img {
+  margin-top: 2rem;
+  width: 20%;
+  height: 20%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* fact cover display */
+#fact_container {
+  position: relative;
+  width: 50vh;
+  height: 50vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  margin: 1rem;
+}
+
+#fact_overlay {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: 0.5s ease;
+  background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#fact_container:hover #fact_overlay {
+  opacity: 1;
+}
+
+/* responsive */
+@media only screen and (max-width: 600px) {
+  #fact_container {
+    width: 80vw;
+    height: 80vw;
+  }
 }

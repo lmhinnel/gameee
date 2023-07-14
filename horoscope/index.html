@@ -22,15 +22,21 @@
     <form id="user_data" onsubmit="getFact(event)" onreset="getOnlineFact(event)">
       <label for="birthday">Điền ngày xing:</label>
       <input type="date" id="birthday" name="birthday" onchange="getHoroscope(event.target.value)">
-      Hoặc chọn
+      hoặc chọn
       <label for="horoscope">Cung hoàng đạo:</label>
-      <select name="horoscope" id="horoscope"></select>
+      <select name="horoscope" id="horoscope" onchange="removeBd()"></select>
+      &nbsp;
       <button type="submit">Hehe1</button>
     </form>
   </div>
   <div>
-    <div id="fact_title"></div>
-    <div id="fact_content"></div>
+    <div id="fact_container">
+      <div id="fact_overlay">
+        <div id="fact_title"></div>
+        <div id="fact_content">HEHE</div>
+        <div id="fact_img"></div>
+      </div>
+    </div>
   </div>
 
   <script src="script.js"></script>
