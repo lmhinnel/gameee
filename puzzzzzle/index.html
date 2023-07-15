@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./../style.css">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" type="image/x-icon" href="./../assets/puzzzzzle.ico">
+    <title>Puzzzzzle</title>
+</head>
+
+<body>
+    <header>
+        <h1>
+            <span class="btn_back" onclick="history.back()"> &lt;&lt; </span>
+            Puzzzzzle
+        </h1>
+    </header>
+
+    <div>
+        <form id="gameForm" onsubmit="playy(event)">
+            <label for="gameSize">Game size</label>
+            <select name="gameSize" id="gameSize">
+                <option value="3">3x3</option>
+                <option value="4">4x4</option>
+                <option value="5">5x5</option>
+                <option value="6">6x6</option>
+                <option value="7">7x7</option>
+                <option value="8">8x8</option>
+            </select>
+            <label for="gameImage">Game image</label>
+            <input type="file" name="gameImage" id="gameImage" accept="image/*" />
+            <button type="submit">play go go</button>
+        </form>
+    </div>
+
+    <div>
+        <div id='test'></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

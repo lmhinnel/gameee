@@ -1,0 +1,11 @@
+#test {
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+}
+
+.g-square {
+    width: 10px;
+    height: 10px;
+    background-size: cover;
+}
