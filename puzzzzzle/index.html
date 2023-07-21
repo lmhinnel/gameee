@@ -12,6 +12,7 @@
 </head>
 
 <body>
+    <script src="style.js"></script>
     <header>
         <h1>
             <span class="btn_back" onclick="history.back()"> &lt;&lt; </span>
@@ -23,7 +24,7 @@
         <form id="gameForm" onsubmit="playy(event)">
             <label for="gameSize">Game size</label>
             <select name="gameSize" id="gameSize">
-                <option value="3">3x3</option>
+                <!-- <option value="3">3x3</option> -->
                 <option value="4">4x4</option>
                 <option value="5">5x5</option>
                 <option value="6">6x6</option>
@@ -36,8 +37,7 @@
         </form>
     </div>
 
-    <div>
-        <div id='test'></div>
+    <div id="gameBoard">
     </div>
 
     <script src="script.js"></script>
