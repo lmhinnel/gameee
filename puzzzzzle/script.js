@@ -1,5 +1,6 @@
 const gameForm = document.getElementById("gameForm");
 const gameBoard = document.getElementById("gameBoard");
+const helpMe = document.getElementById("helpMe");
 
 const img = new Image();
 img.onload = () => {
@@ -35,7 +36,11 @@ function initial() {
       piece.dataset.col = j;
       piece.addEventListener("click", (e) => {
         swapEmptyPiece(e.target, i, j);
-        checkWin();
+        if (checkWin()) {
+          setTimeout(() => {
+            alert("Thắng gùi, đỉnh zữ!! _(:3 」∠)_");
+          }, 100);
+        }
       });
 
       if (i == GAME.size - 1 && j == GAME.size - 1) {
@@ -84,6 +89,11 @@ function playy(fromEvent) {
 
 function shuffle() {
   const pieces = Array.from(document.querySelectorAll(".piece"));
+
+  // test win
+  // swapPiece(pieces[pieces.length - 1], pieces[pieces.length - 2]);
+  // return;
+
   // optimize order
   const randomOrder = Array.from(Array(GAME.size * GAME.size).keys()).sort(
     () => 0.5 - Math.random()
@@ -147,15 +157,41 @@ function swapPiece(pA, pB) {
 }
 
 function checkWin() {
-  var win = true;
-  for (piecee in Array.from(document.querySelectorAll(".piece"))) {
-    if (piecee.id != `${piecee.dataset.row}-${piecee.dataset.col}`) {
-      win = false;
-      break;
-    }
+  const pieces = Array.from(document.querySelectorAll(".piece"));
+  for (let i = 0; i < pieces.length; i++) {
+    if (
+      pieces[i].id != "nome" &&
+      pieces[i].id != `${pieces[i].dataset.row}-${pieces[i].dataset.col}`
+    )
+      return false;
   }
-
-  if (win) {
-    alert("You win!");
-  }
+  return true;
 }
+
+function helpMeImg() {
+  let heheImg = document.createElement("div");
+  heheImg.id = "heheImg";
+  heheImg.style.backgroundImage = `url(${GAME.image.url})`;
+  heheImg.style.height = GAME.size * (getCurrentPieceSize() + 0.5) + "px";
+  heheImg.style.width = heheImg.style.height;
+
+  let heheImgCover = document.createElement("div");
+  heheImgCover.id = "heheImgCover";
+  heheImgCover.appendChild(heheImg);
+
+  heheImgCover.addEventListener("click", () => {
+    if (document.getElementById("heheImgCover")) {
+      document.getElementById("heheImgCover").remove();
+    }
+  });
+  return heheImgCover;
+}
+
+helpMe.addEventListener("click", () => {
+  if (!GAME.image.url) return alert("Hé hé");
+  if (document.getElementById("heheImgCover")) {
+    document.getElementById("heheImgCover").remove();
+  } else {
+    document.body.appendChild(helpMeImg());
+  }
+});

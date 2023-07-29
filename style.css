@@ -1,5 +1,6 @@
 :root {
   --primary-color: rgb(135, 206, 235);
+  --secondary-color: rgb(104, 158, 179);
 }
 
 .nav_menu li {
@@ -46,4 +47,18 @@ header h1 {
 .btn_back:hover {
   background: var(--primary-color);
   color: white;
+}
+
+.float-butt {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  width: 2rem;
+  height: 2rem;
+  z-index: 100;
+  border-radius: 50%;
+  cursor: pointer;
+  content: url("./assets/dodge.png");
+  background-color: var(--primary-color);
+  border: 2px solid var(--secondary-color);
 }

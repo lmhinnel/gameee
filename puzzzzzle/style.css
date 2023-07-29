@@ -1,21 +1,40 @@
 #gameBoard {
-    margin-top: 1rem;
-    border: 0.5px solid black;
-    width: fit-content;
-    height: fit-content;
+  margin-top: 1rem;
+  border: 0.5px solid black;
+  width: fit-content;
+  height: fit-content;
 }
 
 .row {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .piece {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 #nome {
-    cursor: default;
+  cursor: default;
+}
+
+#heheImg {
+  background-size: cover;
+  border: 1px solid var(--primary-color);
+}
+
+#heheImgCover {
+  position: fixed;
+  z-index: 9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  transition: all 0.5s;
 }
