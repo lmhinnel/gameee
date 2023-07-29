@@ -31,6 +31,12 @@ function initial() {
     for (let j = 0; j < GAME.size; j++) {
       const piece = document.createElement("div");
       piece.classList.add("piece");
+      piece.dataset.row = i;
+      piece.dataset.col = j;
+      piece.addEventListener("click", (e) => {
+        swapEmptyPiece(e.target, i, j);
+        checkWin();
+      });
 
       if (i == GAME.size - 1 && j == GAME.size - 1) {
         piece.style = "";
@@ -76,23 +82,80 @@ function playy(fromEvent) {
   img.src = GAME.image.url;
 }
 
-// shuffe board
 function shuffle() {
   const pieces = Array.from(document.querySelectorAll(".piece"));
   // optimize order
   const randomOrder = Array.from(Array(GAME.size * GAME.size).keys()).sort(
     () => 0.5 - Math.random()
   );
-  console.log(randomOrder);
   pieces.forEach((cur, index) => {
-    const replacePiece = pieces[randomOrder[index]];
-    const tempCur = {
-      id: cur.id,
-      style: { backgroundPosition: cur.style.backgroundPosition },
-    };
-    cur.id = replacePiece.id;
-    cur.style.backgroundPosition = replacePiece.style.backgroundPosition;
-    replacePiece.id = tempCur.id;
-    replacePiece.style.backgroundPosition = tempCur.style.backgroundPosition;
+    swapPiece(cur, pieces[randomOrder[index]]);
   });
+}
+
+function swapEmptyPiece(cur, row, col) {
+  var piecee;
+  // up
+  if (row > 0) {
+    piecee = document.querySelector(
+      `[data-row='${row - 1}'][data-col='${col}']`
+    );
+    piecee.id == "nome" ? swapPiece(cur, piecee) : null;
+  }
+  // down
+  if (row < GAME.size - 1) {
+    piecee = document.querySelector(
+      `[data-row='${row + 1}'][data-col='${col}']`
+    );
+    piecee.id == "nome" ? swapPiece(cur, piecee) : null;
+  }
+
+  // left
+  if (col > 0) {
+    piecee = document.querySelector(
+      `[data-row='${row}'][data-col='${col - 1}']`
+    );
+    piecee.id == "nome" ? swapPiece(cur, piecee) : null;
+  }
+
+  // right
+  if (col < GAME.size - 1) {
+    piecee = document.querySelector(
+      `[data-row='${row}'][data-col='${col + 1}']`
+    );
+    piecee.id == "nome" ? swapPiece(cur, piecee) : null;
+  }
+}
+
+function swapPiece(pA, pB) {
+  const tempCur = {
+    id: pA.id,
+    style: {
+      backgroundPosition: pA.style.backgroundPosition,
+      backgroundImage: pA.style.backgroundImage,
+      backgroundSize: pA.style.backgroundSize,
+    },
+  };
+  pA.id = pB.id;
+  pA.style.backgroundPosition = pB.style.backgroundPosition;
+  pA.style.backgroundImage = pB.style.backgroundImage;
+  pA.style.backgroundSize = pB.style.backgroundSize;
+  pB.id = tempCur.id;
+  pB.style.backgroundPosition = tempCur.style.backgroundPosition;
+  pB.style.backgroundImage = tempCur.style.backgroundImage;
+  pB.style.backgroundSize = tempCur.style.backgroundSize;
+}
+
+function checkWin() {
+  var win = true;
+  for (piecee in Array.from(document.querySelectorAll(".piece"))) {
+    if (piecee.id != `${piecee.dataset.row}-${piecee.dataset.col}`) {
+      win = false;
+      break;
+    }
+  }
+
+  if (win) {
+    alert("You win!");
+  }
 }
