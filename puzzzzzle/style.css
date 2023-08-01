@@ -38,3 +38,7 @@
   left: 0;
   transition: all 0.5s;
 }
+
+#clock::after {
+  content: "s";
+}

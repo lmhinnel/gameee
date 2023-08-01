@@ -1,6 +1,8 @@
 const gameForm = document.getElementById("gameForm");
 const gameBoard = document.getElementById("gameBoard");
 const helpMe = document.getElementById("helpMe");
+const clock = document.getElementById("clock");
+const CLLOCK = null;
 
 const img = new Image();
 img.onload = () => {
@@ -9,6 +11,7 @@ img.onload = () => {
   GAME.image.size = img.width > img.height ? img.height : img.width;
   initial();
   shuffle();
+  CLLOCK = createClock();
 };
 
 const GAME = {
@@ -37,8 +40,15 @@ function initial() {
       piece.addEventListener("click", (e) => {
         swapEmptyPiece(e.target, i, j);
         if (checkWin()) {
+          let ttime = parseInt(clock.innerHTML);
           setTimeout(() => {
-            alert("Thắng gùi, đỉnh zữ!! _(:3 」∠)_");
+            clearInterval(CLLOCK);
+            alert(
+              `Chỉ mất ${Math.floor(ttime / 60)}' ${
+                ttime % 60
+              }s, pro đã giải xong, đỉnh zữ!! _(:3 」∠)_`
+            );
+            clock.innerHTML = "0";
           }, 100);
         }
       });
@@ -83,21 +93,49 @@ function playy(fromEvent) {
     url: URL.createObjectURL(fromImg),
   };
 
-  // set image => initial img.onload
   img.src = GAME.image.url;
+}
+
+function getRandomRelativePosition(row, col) {
+  while (true) {
+    let random = Math.floor(Math.random() * 4);
+    switch (random) {
+      case 0: // up
+        if (row > 0) return { row: row - 1, col };
+      case 1: // down
+        if (row < GAME.size - 1) return { row: row + 1, col };
+      case 2: // left
+        if (col > 0) return { row, col: col - 1 };
+      case 3: // right
+        if (col < GAME.size - 1) return { row, col: col + 1 };
+    }
+  }
 }
 
 function shuffle() {
   const pieces = Array.from(document.querySelectorAll(".piece"));
 
   // test win
-  // swapPiece(pieces[pieces.length - 1], pieces[pieces.length - 2]);
-  // return;
+  swapPiece(pieces[pieces.length - 1], pieces[pieces.length - 2]);
+  return;
 
-  // optimize order
-  const randomOrder = Array.from(Array(GAME.size * GAME.size).keys()).sort(
-    () => 0.5 - Math.random()
+  const matrix = Array.from(Array(GAME.size).keys()).map((i) =>
+    Array.from(Array(GAME.size).keys()).map((j) => i * GAME.size + j)
   );
+  let mtP = {
+    row: GAME.size - 1,
+    col: GAME.size - 1,
+    value: Math.pow(GAME.size, GAME.size),
+  };
+  for (let i = 0; i < mtP.value; i++) {
+    let swapP = getRandomRelativePosition(mtP.row, mtP.col);
+    matrix[mtP.row][mtP.col] = matrix[swapP.row][swapP.col];
+    matrix[swapP.row][swapP.col] = mtP.value;
+    mtP.row = swapP.row;
+    mtP.col = swapP.col;
+  }
+
+  const randomOrder = matrix.reduce((acc, cur) => acc.concat(cur), []);
   pieces.forEach((cur, index) => {
     swapPiece(cur, pieces[randomOrder[index]]);
   });
@@ -195,3 +233,10 @@ helpMe.addEventListener("click", () => {
     document.body.appendChild(helpMeImg());
   }
 });
+
+function createClock() {
+  const time_interval = setInterval(() => {
+    clock.innerHTML = parseInt(clock.innerHTML) + 1;
+  }, 1000);
+  return time_interval;
+}
