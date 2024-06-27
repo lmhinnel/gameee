@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./../style.css">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" type="image/x-icon" href="./../assets/a-maze-ing.ico">
+    <title>A-maze-ing</title>
+</head>
+
+<body>
+    <script src="style.js"></script>
+    <header>
+        <h1>
+            <span class="btn_back" onclick="history.back()"> &lt;&lt; </span>
+            A-maze-ing
+        </h1>
+    </header>
+
+    <div>
+        <label for="mazeSize">Maze size:</label>
+        <input type="number" id="mazeSize" name="mazeSize" min="10" max="100" placeholder="10" value="10" />
+        <button id="generateButt">Generate</button>
+    </div>
+
+    <div id="mazeBoard"></div>
+    <div class="float-butt" id="helpMe"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

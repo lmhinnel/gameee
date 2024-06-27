@@ -1,0 +1,26 @@
+#mazeBoard {
+  margin-top: 1rem;
+  width: fit-content;
+  height: fit-content;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.maze-row {
+  display: flex;
+}
+
+.maze-cell {
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid black;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+#me {
+  background: url('../assets/bananeko.gif');
+  background-size: contain;
+  width: 1rem;
+  height: 1rem;
+}
