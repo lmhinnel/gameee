@@ -62,3 +62,48 @@ header h1 {
   background-color: var(--primary-color);
   border: 2px solid var(--secondary-color);
 }
+
+.center-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.movable {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
+  background-color: #f1f1f199;
+  border-radius: 1rem;
+  width: fit-content;
+  height: fit-content;
+}
+
+.movable-content span {
+  cursor: pointer;
+  font-size: xx-large;
+  padding: 0.2rem;
+}
+
+.button-up::before {
+  content: "⬆️";
+}
+
+.button-down::before {
+  content: "⬇️";
+}
+
+.button-left::before {
+  content: "⬅️";
+}
+
+.button-right::before {
+  content: "➡️";
+}
+
+.button-pin::before {
+  content: "⚙️";
+  cursor: move;
+  z-index: 11;
+}

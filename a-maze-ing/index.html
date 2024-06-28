@@ -27,9 +27,27 @@
     </div>
 
     <div id="mazeBoard"></div>
+
+    <div id="movable" class="movable">
+        <div class="movable-content">
+            <div class="center-div">
+                <span class="button-up" onclick="move('ArrowUp')"></span>
+            </div>
+            <div class="center-div">
+                <span class="button-left" onclick="move('ArrowLeft')"></span>
+                <span id="movable-header" class="button-pin" onclick=""></span>
+                <span class="button-right" onclick="move('ArrowRight')"></span>
+            </div>
+            <div class="center-div">
+                <span class="button-down" onclick="move('ArrowDown')"></span>
+            </div>
+        </div>
+    </div>
+
     <div class="float-butt" id="helpMe"></div>
 
     <script src="script.js"></script>
+    <script src="../utils/movable.js"></script>
 </body>
 
 </html>

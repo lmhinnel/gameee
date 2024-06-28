@@ -94,6 +94,7 @@ const alg1 = () => {
 };
 
 const move = (direction) => {
+  if (GAME.status !== MAZE_STATUS.PLAYING) return;
   const me = document.getElementById("me");
   let [x, y] = me.parentElement.id.split("-").slice(1);
   if (
@@ -140,6 +141,5 @@ generateButt.addEventListener("click", () => {
 helpMe.addEventListener("click", () => {});
 
 document.body.addEventListener("keydown", function (event) {
-  if (GAME.status !== MAZE_STATUS.PLAYING) return;
   move(event.key);
 });
