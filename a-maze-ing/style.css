@@ -2,8 +2,7 @@
   margin-top: 1rem;
   width: fit-content;
   height: fit-content;
-  border-right: 1px solid black;
-  border-bottom: 1px solid black;
+  border: 1px solid black;
 }
 
 .maze-row {
@@ -13,9 +12,7 @@
 .maze-cell {
   width: 1rem;
   height: 1rem;
-  border: 1px solid black;
-  border-right: 0;
-  border-bottom: 0;
+  border: 0.5px solid black;
 }
 
 #me {
@@ -23,4 +20,24 @@
   background-size: contain;
   width: 1rem;
   height: 1rem;
+}
+
+.goal {
+  background-image: linear-gradient(217deg,
+      rgb(255 127 127 / 90%),
+      rgb(255 0 0 / 0%) 70%),
+    linear-gradient(127deg, rgb(127 255 127 / 90%), rgb(0 255 0 / 0%) 70%),
+    linear-gradient(336deg, rgb(127 127 255 / 90%), rgb(0 0 255 / 0%) 70%);
+}
+
+.a-star-red {
+  background-color: rgba(255, 127, 127);
+}
+
+.a-star-green {
+  background-color: rgba(127, 255, 127);
+}
+
+.a-star-blue {
+  background-color: rgba(127, 127, 255);
 }

@@ -3,12 +3,26 @@ const MAZE_SIZE = {
     MAX: 100,
   },
   MAZE_STATUS = {
-    NEW: "new",
     PLAYING: "playing",
     END: "end",
   };
 
 const ARROWS = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+
+class cell {
+  constructor() {
+    this.f = 0; // f = g + h
+    this.g = 0; // start -> cell
+    this.h = 0; // cell -> end
+    this.parent = [0, 0];
+    this.walls = {
+      top: true,
+      bottom: true,
+      left: true,
+      right: true,
+    };
+  }
+}
 
 const mazeSize = document.getElementById("mazeSize"),
   generateButt = document.getElementById("generateButt"),
@@ -17,12 +31,24 @@ const mazeSize = document.getElementById("mazeSize"),
 
 const GAME = {
   size: 10,
-  status: MAZE_STATUS.NEW,
+  status: MAZE_STATUS.END,
+  map: [],
 };
 
 const generateMaze = () => {
   GAME.size = mazeSize.value;
   GAME.status = MAZE_STATUS.PLAYING;
+  GAME.map = [];
+  for (let i = 0; i < GAME.size; i++) {
+    let row = [];
+    for (let j = 0; j < GAME.size; j++) {
+      row.push(new cell(i, j));
+    }
+    GAME.map.push(row);
+  }
+};
+
+const drawMaze = () => {
   mazeBoard.innerHTML = "";
   for (let i = 0; i < GAME.size; i++) {
     const row = document.createElement("div");
@@ -31,6 +57,10 @@ const generateMaze = () => {
       const cell = document.createElement("div");
       cell.className = "maze-cell";
       cell.id = `x-${i}-${j}`;
+      if (!GAME.map[i][j].walls.top) cell.style.borderTopColor = "white";
+      if (!GAME.map[i][j].walls.bottom) cell.style.borderBottomColor = "white";
+      if (!GAME.map[i][j].walls.left) cell.style.borderLeftColor = "white";
+      if (!GAME.map[i][j].walls.right) cell.style.borderRightColor = "white";
       row.appendChild(cell);
     }
     mazeBoard.appendChild(row);
@@ -38,59 +68,20 @@ const generateMaze = () => {
 };
 
 const startHehe = () => {
-  document.getElementById("x-0-0").style.borderTop = "1px solid white";
-  document.getElementById(`x-${GAME.size - 1}-${GAME.size - 1}`).innerHTML =
-    "<div id='me'></div>";
+  document.getElementById("x-0-0").innerHTML = "<div id='me'></div>";
+  document
+    .getElementById(`x-${GAME.size - 1}-${GAME.size - 1}`)
+    .classList.add("goal");
 };
 
-// https://en.wikipedia.org/wiki/Maze_generation_algorithm#Iterative_implementation_(with_stack)
-const alg1 = () => {
-  const stack = [];
-  const visited = new Set();
-  const start = [0, 0];
-  visited.add(start.join("-"));
-  stack.push(start);
-
-  while (stack.length > 0) {
-    const current = stack.pop();
-    const [x, y] = current;
-    const unvisited = [
-      [x - 1, y],
-      [x + 1, y],
-      [x, y - 1],
-      [x, y + 1],
-    ].filter(
-      (n) =>
-        0 <= n[0] &&
-        0 <= n[1] &&
-        n[0] < GAME.size &&
-        n[1] < GAME.size &&
-        !visited.has(n.join("-"))
-    );
-    if (unvisited.length === 0) continue;
-
-    stack.push(current);
-    const rand = unvisited[Math.floor(Math.random() * unvisited.length)];
-    if (rand) {
-      // up - down - left - right
-      if (rand[0] === x - 1) {
-        const wall = document.getElementById(`x-${x}-${y}`);
-        wall.style.borderTop = "1px solid white";
-      } else if (rand[0] === x + 1) {
-        const wall = document.getElementById(`x-${x + 1}-${y}`);
-        wall.style.borderTop = "1px solid white";
-      } else if (rand[1] === y - 1) {
-        const wall = document.getElementById(`x-${x}-${y}`);
-        wall.style.borderLeft = "1px solid white";
-      } else if (rand[1] === y + 1) {
-        const wall = document.getElementById(`x-${x}-${y + 1}`);
-        wall.style.borderLeft = "1px solid white";
-      }
-
-      visited.add(rand.join("-"));
-      stack.push(rand);
-    }
-  }
+const endHehe = () => {
+  if (!document.getElementById("me").parentElement.classList.contains("goal"))
+    return;
+  new Promise((resolve) => setTimeout(resolve, 5000)); // 5 second wait
+  setTimeout(function () {
+    GAME.status = MAZE_STATUS.END;
+    alert("You won Teehee!");
+  }, 100);
 };
 
 const move = (direction) => {
@@ -99,33 +90,17 @@ const move = (direction) => {
   let [x, y] = me.parentElement.id.split("-").slice(1);
   if (
     !ARROWS.includes(direction) ||
-    (direction === "ArrowUp" &&
-      (x === 0 ||
-        document.getElementById(`x-${x--}-${y}`).style.borderTopColor !=
-          "white")) ||
+    (direction === "ArrowUp" && (x === 0 || GAME.map[x--][y].walls.top)) ||
     (direction === "ArrowDown" &&
-      (x++ === GAME.size - 1 ||
-        document.getElementById(`x-${x}-${y}`).style.borderTopColor !=
-          "white")) ||
-    (direction === "ArrowLeft" &&
-      (y === 0 ||
-        document.getElementById(`x-${x}-${y--}`).style.borderLeftColor !=
-          "white")) ||
+      (x === GAME.size - 1 || GAME.map[x++][y].walls.bottom)) ||
+    (direction === "ArrowLeft" && (y === 0 || GAME.map[x][y--].walls.left)) ||
     (direction === "ArrowRight" &&
-      (y++ === GAME.size - 1 ||
-        document.getElementById(`x-${x}-${y}`).style.borderLeftColor !=
-          "white"))
+      (y === GAME.size - 1 || GAME.map[x][y++].walls.right))
   )
     return;
-
-  if (x == -1 && y == 0 && direction === "ArrowUp") {
-    GAME.status = MAZE_STATUS.END;
-    alert("You won Teehee!");
-    return;
-  }
-
   me.parentElement.innerHTML = "";
   document.getElementById(`x-${x}-${y}`).innerHTML = "<div id='me'></div>";
+  endHehe();
 };
 
 generateButt.addEventListener("click", () => {
@@ -135,10 +110,27 @@ generateButt.addEventListener("click", () => {
   }
   generateMaze();
   alg1();
+  drawMaze();
   startHehe();
 });
 
-helpMe.addEventListener("click", () => {});
+helpMe.addEventListener("click", () => {
+  if (GAME.status !== MAZE_STATUS.PLAYING) return;
+
+  const aStar = sol1();
+  if (!aStar) {
+    return;
+  }
+  const bgIncrese = 0.5 / aStar.length;
+  for (let i = 0; i < aStar.length; i++) {
+    setTimeout(() => {
+      const [x, y] = aStar[i];
+      document.getElementById(
+        `x-${x}-${y}`
+      ).style.backgroundColor = `rgba(127, 127, 255, ${0.2 + bgIncrese * i})`;
+    }, 100 * i);
+  }
+});
 
 document.body.addEventListener("keydown", function (event) {
   move(event.key);
