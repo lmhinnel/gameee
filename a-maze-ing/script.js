@@ -27,6 +27,8 @@ class cell {
 const mazeSize = document.getElementById("mazeSize"),
   generateButt = document.getElementById("generateButt"),
   mazeBoard = document.getElementById("mazeBoard"),
+  timer = document.getElementById("timer"),
+  steppy = document.getElementById("steppy"),
   helpMe = document.getElementById("helpMe");
 
 const GAME = {
@@ -34,6 +36,8 @@ const GAME = {
   status: MAZE_STATUS.END,
   map: [],
 };
+
+let stopwatch = new Stopwatch(timer, null);
 
 const generateMaze = () => {
   GAME.size = mazeSize.value;
@@ -72,15 +76,21 @@ const startHehe = () => {
   document
     .getElementById(`x-${GAME.size - 1}-${GAME.size - 1}`)
     .classList.add("goal");
+  stopwatch.restart();
+  steppy.innerHTML = 0;
 };
 
 const endHehe = () => {
   if (!document.getElementById("me").parentElement.classList.contains("goal"))
     return;
-  new Promise((resolve) => setTimeout(resolve, 5000)); // 5 second wait
+  stopwatch.stop();
   setTimeout(function () {
     GAME.status = MAZE_STATUS.END;
-    alert("You won Teehee!");
+    alert(
+      `You won Teehee! Your time iz ${stopwatch.format(
+        stopwatch.times
+      )}ms and it took you only ${steppy.innerHTML} steps! 🎉🎉🎉`
+    );
   }, 100);
 };
 
@@ -100,6 +110,7 @@ const move = (direction) => {
     return;
   me.parentElement.innerHTML = "";
   document.getElementById(`x-${x}-${y}`).innerHTML = "<div id='me'></div>";
+  steppy.innerHTML = parseInt(steppy.innerHTML) + 1;
   endHehe();
 };
 

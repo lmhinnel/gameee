@@ -24,6 +24,7 @@
         <label for="mazeSize">Maze size:</label>
         <input type="number" id="mazeSize" name="mazeSize" min="10" max="100" placeholder="10" value="10" />
         <button id="generateButt">Generate</button>
+        <div>Time: <span id="timer">0</span>ms - Step: <span id="steppy">0</span></div>
     </div>
 
     <div id="mazeBoard"></div>
@@ -46,10 +47,11 @@
 
     <div class="float-butt" id="helpMe"></div>
 
-    <script src="script.js"></script>
-    <script src="algorithm.js"></script>
     <script src="../utils/movable.js"></script>
     <script src="../utils/priorityQueue.js"></script>
+    <script src="../utils/timer.js"></script>
+    <script src="script.js"></script>
+    <script src="algorithm.js"></script>
 </body>
 
 </html>

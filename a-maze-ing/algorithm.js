@@ -105,6 +105,7 @@ const sol1 = () => {
           col = parent[1];
         }
         path.push([0, 0]);
+        path.shift();
         return path.reverse();
       }
 
